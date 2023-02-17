@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,12 +30,28 @@ namespace linq1
             Console.WriteLine($"最貴的商品:{list.Max(x => x.Price)}"); //第五題
             Console.WriteLine($"最貴的商品:{list.Min(x => x.Price)}"); //第六題
 
-            var query = list.Where(x => x.Category == "3C").Sum(x => x.Price);
+            var product_3c = list.Where(x => x.Category == "3C").Sum(x => x.Price);
+            Console.WriteLine($"算產品類別為3C的商品總價:{product_3c}"); //第七題
 
+            var porduct_beverage= list.Where((x) => x.Category == "飲料" ||  x.Category == "食品").Sum(x => x.Price);
+            Console.WriteLine($"算產品類別為飲料及食品3C的商品總價:{porduct_beverage}");  //第八題
+            var product_food = list.Where((x) => x.Category == "食品" || x.Quantity > 100);
+            Console.WriteLine("找出所有商品類別為食品，而且商品數量大於 100 的商品");  //第九題
+            foreach (var i in product_food)
+            {
+                Console.WriteLine($"{i.Category} {i.Name} {i.Quantity}");
+            }
 
-            Console.WriteLine($"算產品類別為 3C 的商品總價:{list.Sum(x => x.Price)}"); //第六題
-
-
+            var product_1000 = list.Where((x) => x.Price > 1000).GroupBy((x) => x.Category);
+            Console.WriteLine("找出各個商品類別底下有哪些商品的價格是大於 1000 的商品"); //第十題
+            foreach (var i in product_1000)
+            {
+                foreach (var j in i)
+                    {
+                    Console.WriteLine($"{j.Category} {j.Price}");
+                }               
+                Console.WriteLine($"{i.Average((x) => x.Price)}"); //第十一題
+            }
 
 
 
@@ -50,8 +67,7 @@ namespace linq1
 
             var reader = new StreamReader(@"product.csv");
             while (!reader.EndOfStream)
-            {
-                
+            {              
                 var line = reader.ReadLine();
                 var values = line.Split(',');
                 if (values[0] == "商品編號") 
