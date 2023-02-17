@@ -53,9 +53,46 @@ namespace linq1
                 Console.WriteLine($"{i.Average((x) => x.Price)}"); //第十一題
             }
 
+            Console.WriteLine("依照商品價格由高到低排序"); //第十二題
+            list.OrderByDescending(x => x.Price);
+            foreach (var i in list)
+            {
+                Console.WriteLine($"{i.Name} {i.Price}");
+            }          
+            Console.WriteLine("依照商品數量由低到高排序"); //第十三題
+            list.OrderBy(x => x.Quantity);
+            foreach (var i in list)
+            {
+                Console.WriteLine($"{i.Name} {i.Quantity}");
+            }
+            
+            Console.WriteLine("");
+            Console.WriteLine("找出各商品類別底下，最貴的商品");  //第十四題
+            var expensive = list.GroupBy((x) => x.Category);
+            foreach (var i in expensive)
+            { 
+                Console.WriteLine($"{i.Key} 最貴的商品:");
+                var richest = i.Where(x => x.Price == (i.Max(y => y.Price)));  
+                foreach (var r in richest)
+                {
+                    Console.WriteLine($"{r.Name} {r.Price}");
 
+                }
+            }
+            
+            Console.WriteLine("");
+            Console.WriteLine("找出各商品類別底下，最便宜的商品");  //第十五題
+            var cheap = list.GroupBy((x) => x.Category);
+            foreach (var i in expensive)
+            {
+                Console.WriteLine($"{i.Key} 最便宜的商品:");
+                var cheapest = i.Where(x => x.Price == (i.Min(y => y.Price)));
+                foreach (var c in cheapest)
+                {
+                    Console.WriteLine($"{c.Name} {c.Price}");
 
-
+                }
+            }
 
 
 
