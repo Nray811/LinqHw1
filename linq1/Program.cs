@@ -72,7 +72,7 @@ namespace linq1
             list.OrderBy(x => x.Quantity);
             foreach (var i in list)
             {
-                Console.WriteLine($"{i.Name} {i.Quantity}");
+                Console.WriteLine($"{i.Category} {i.Name} {i.Quantity}");
             }
             
             Console.WriteLine("");
